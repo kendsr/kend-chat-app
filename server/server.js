@@ -21,12 +21,14 @@ io.on('connection', (socket) => {
     // socket.broadcast.emit from Admin text New user joined
     socket.broadcast.emit('newMessage', generateMessage('Admin', 'New User joined'));
 
+    // Listen for createMessage from browser
     socket.on('createMessage', (message, callback) => {
         console.log('createMsg:',message);
         io.emit('newMessage', generateMessage(message.from, message.text));
         callback('This is from the server');
     });
 
+    //listen for sendLocation from browser
     socket.on('createLocationMessage', (coords) => {
         io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude));
     });
